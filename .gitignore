@@ -1,0 +1,47 @@
+# Environnement Python virtuel
+venv/
+.venv/
+env/
+ENV/
+
+# Bytecode Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+
+# Variables d'environnement (contient les mots de passe !)
+.env
+.env.local
+.env.*.local
+
+# Fichiers IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+logs/
+
+# Alembic (versions auto-générées)
+# alembic/versions/*.py  # décommentez si vous voulez ignorer les versions
+
+# Fichiers de build
+dist/
+build/
+*.egg-info/
+
+# Fichiers temporaires
+*.tmp
+*.bak
+.DS_Store
+Thumbs.db
+
+# Fichiers audio / données (potentiellement lourds)
+*.wav
+*.mp3
+*.ogg
+data/
+datasets/
