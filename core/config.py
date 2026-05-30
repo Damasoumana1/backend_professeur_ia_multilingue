@@ -3,7 +3,8 @@ Loads environment variables from .env file.
 """
 import os
 from pathlib import Path
-from pydantic import BaseSettings, Field, PostgresDsn
+from pydantic import Field, PostgresDsn
+from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
     # Application
@@ -18,14 +19,18 @@ class Settings(BaseSettings):
     POSTGRES_PORT: int = Field(5432, env="POSTGRES_PORT")
 
     @property
-    def DATABASE_URL(self) -> PostgresDsn:
-        return PostgresDsn.build(
-            scheme="postgresql+asyncpg",
-            user=self.POSTGRES_USER,
-            password=self.POSTGRES_PASSWORD,
-            host=self.POSTGRES_SERVER,
-            port=str(self.POSTGRES_PORT),
-            path=f"/{self.POSTGRES_DB}",
+    def DATABASE_URL(self) -> str:
+        return (
+            f"postgresql+asyncpg://{self.POSTGRES_USER}:{self.POSTGRES_PASSWORD}"
+            f"@{self.POSTGRES_SERVER}:{self.POSTGRES_PORT}/{self.POSTGRES_DB}"
+        )
+
+    @property
+    def DATABASE_URL_SYNC(self) -> str:
+        """URL synchrone (pour Alembic et les scripts de migration)."""
+        return (
+            f"postgresql+psycopg2://{self.POSTGRES_USER}:{self.POSTGRES_PASSWORD}"
+            f"@{self.POSTGRES_SERVER}:{self.POSTGRES_PORT}/{self.POSTGRES_DB}"
         )
 
     class Config:
