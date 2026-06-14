@@ -18,6 +18,9 @@ class Settings(BaseSettings):
     POSTGRES_DB: str = Field(..., env="POSTGRES_DB")
     POSTGRES_PORT: int = Field(5432, env="POSTGRES_PORT")
 
+    # IA Configuration
+    HUGGINGFACE_TOKEN: str | None = Field(None, env="HUGGINGFACE_TOKEN")
+
     @property
     def DATABASE_URL(self) -> str:
         return (
